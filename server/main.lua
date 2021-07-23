@@ -1,5 +1,7 @@
 ESX = nil
 
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
 printascii = [[
 ^4 _______  _______  _______  _______  _______  _______  _______  _______ 
 ^4/\______\/\______\/\______\/\______\/\______\/\______\/\______\/\______\
@@ -29,7 +31,6 @@ printascii = [[
 
 
 Citizen.CreateThread(function()
-    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
     Wait(15000)
     print(printascii)
 end)
@@ -37,7 +38,6 @@ end)
 
 function getIdentity(source, callback)
 	local xPlayer = ESX.GetPlayerFromId(source)
-
 	MySQL.Async.fetchAll('SELECT identifier, firstname, lastname, dateofbirth, sex, height FROM `users` WHERE `identifier` = @identifier', {
 		['@identifier'] = xPlayer.identifier
 	}, function(result)
